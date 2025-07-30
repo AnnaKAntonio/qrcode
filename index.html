@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Validação de Certificado - NavelinkNet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #ffffff;
+            margin: 80px auto;
+            padding: 40px 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1a73e8;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1558b0;
+        }
+
+        .resultado {
+            margin-top: 30px;
+            font-size: 18px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .valido {
+            background-color: #e0f9e0;
+            color: #2b8c2b;
+            border: 1px solid #2b8c2b;
+        }
+
+        .invalido {
+            background-color: #ffe0e0;
+            color: #b02b2b;
+            border: 1px solid #b02b2b;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Validação de Certificado</h1>
+        <p>Digite o número do certificado ou link<strong></strong></p>
+        <input type="text" id="certId" placeholder="Ex: 12345" />
+        <br>
+        <button onclick="validar()">Validar</button>
+
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <footer>
+        © 2025 NavelinkNet - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        const certificados = {
+            "12345": { nome: "Alexandre", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12346": { nome: "Igor", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12347": { nome: "Wesley G", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12348": { nome: "Wesley L", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12349": { nome: "Eric", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12350": { nome: "Leandro", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12351": { nome: "Warley", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12352": { nome: "Eduardo", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12353": { nome: "Luan", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12354": { nome: "Felipe", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
+            "12355": { nome: "Nivaldo", curso: "Treinamento Roteador Deco", data: "04/09/2025" }
+        };
+
+
+        function validar(idDigitado = null) {
+            let id = idDigitado;
+            if (!id) {
+                id = document.getElementById('certId').value.trim();
+            }
+            const resultado = document.getElementById('resultado');
+
+            if (certificados[id]) {
+                const cert = certificados[id];
+                resultado.className = "resultado valido";
+                resultado.innerHTML = `
+          ✅ <strong>Certificado Válido</strong><br><br>
+          Nome: <strong>${cert.nome}</strong><br>
+          Curso: <strong>${cert.curso}</strong><br>
+          Data: <strong>${cert.data}</strong>
+        `;
+            } else {
+                resultado.className = "resultado invalido";
+                resultado.innerHTML = "❌ <strong>Certificado não encontrado ou inválido.</strong>";
+            }
+        }
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                validar(id);
+                document.getElementById('certId').value = id;
+            }
+        };
+    </script>
+</body>
+
+</html>
