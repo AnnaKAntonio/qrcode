@@ -83,8 +83,8 @@
 <body>
     <div class="container">
         <h1>Validação de Certificado</h1>
-        <p>Digite o número do certificado ou link<strong></strong></p>
-        <input type="text" id="certId" placeholder="Ex: 12345" />
+        <p>Digite o número do certificado ou link</p>
+        <input type="text" id="certId" placeholder="Ex: 10001" />
         <br>
         <button onclick="validar()">Validar</button>
 
@@ -96,20 +96,32 @@
     </footer>
 
     <script>
-        const certificados = {
-            "12345": { nome: "Alexandre", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12346": { nome: "Igor", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12347": { nome: "Wesley G", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12348": { nome: "Wesley L", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12349": { nome: "Eric", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12350": { nome: "Leandro", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12351": { nome: "Warley", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12352": { nome: "Eduardo", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12353": { nome: "Luan", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12354": { nome: "Felipe", curso: "Treinamento Roteador Deco", data: "04/09/2025" },
-            "12355": { nome: "Nivaldo", curso: "Treinamento Roteador Deco", data: "04/09/2025" }
-        };
+        // IDs gerados a partir de 10001 (11 alunos x 5 cursos = 55 certificados)
+        const alunos = [
+            "Alexandre", "Igor", "Wesley G", "Wesley L", "Eric",
+            "Leandro", "Warley", "Eduardo", "Luan", "Felipe", "Nivaldo"
+        ];
 
+        const cursos = [
+            "Configuração do Roteador Deco",
+            "Configuração de Rede Mesh",
+            "Controle Parental",
+            "Adicionar IP no Roteador",
+            "Ativação IPV6"
+        ];
+
+        const certificados = {};
+        let idBase = 10001;
+
+        alunos.forEach(aluno => {
+            cursos.forEach(curso => {
+                certificados[idBase++] = {
+                    nome: aluno,
+                    curso: curso,
+                    data: "04/09/2025"
+                };
+            });
+        });
 
         function validar(idDigitado = null) {
             let id = idDigitado;
@@ -122,11 +134,11 @@
                 const cert = certificados[id];
                 resultado.className = "resultado valido";
                 resultado.innerHTML = `
-          ✅ <strong>Certificado Válido</strong><br><br>
-          Nome: <strong>${cert.nome}</strong><br>
-          Curso: <strong>${cert.curso}</strong><br>
-          Data: <strong>${cert.data}</strong>
-        `;
+              ✅ <strong>Certificado Válido</strong><br><br>
+              Nome: <strong>${cert.nome}</strong><br>
+              Curso: <strong>${cert.curso}</strong><br>
+              Data: <strong>${cert.data}</strong>
+            `;
             } else {
                 resultado.className = "resultado invalido";
                 resultado.innerHTML = "❌ <strong>Certificado não encontrado ou inválido.</strong>";
