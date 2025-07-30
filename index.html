@@ -27,31 +27,6 @@
             margin-bottom: 20px;
         }
 
-        input {
-            padding: 12px;
-            font-size: 16px;
-            width: 80%;
-            max-width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #1a73e8;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #1558b0;
-        }
-
         .resultado {
             margin-top: 30px;
             font-size: 18px;
@@ -83,12 +58,7 @@
 <body>
     <div class="container">
         <h1>Validação de Certificado</h1>
-        <p>Digite o número do certificado ou link<strong></strong></p>
-        <input type="text" id="certId" placeholder="Ex: 12345" />
-        <br>
-        <button onclick="validar()">Validar</button>
-
-        <div class="resultado" id="resultado"></div>
+        <div class="resultado" id="resultado">Verificando certificado...</div>
     </div>
 
     <footer>
@@ -110,35 +80,23 @@
             "12355": { nome: "Nivaldo", curso: "Treinamento Roteador Deco", data: "04/09/2025" }
         };
 
-
-        function validar(idDigitado = null) {
-            let id = idDigitado;
-            if (!id) {
-                id = document.getElementById('certId').value.trim();
-            }
+        window.onload = function () {
             const resultado = document.getElementById('resultado');
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
 
-            if (certificados[id]) {
+            if (id && certificados[id]) {
                 const cert = certificados[id];
                 resultado.className = "resultado valido";
                 resultado.innerHTML = `
-          ✅ <strong>Certificado Válido</strong><br><br>
-          Nome: <strong>${cert.nome}</strong><br>
-          Curso: <strong>${cert.curso}</strong><br>
-          Data: <strong>${cert.data}</strong>
-        `;
+                    ✅ <strong>Certificado Válido</strong><br><br>
+                    Nome: <strong>${cert.nome}</strong><br>
+                    Curso: <strong>${cert.curso}</strong><br>
+                    Data: <strong>${cert.data}</strong>
+                `;
             } else {
                 resultado.className = "resultado invalido";
                 resultado.innerHTML = "❌ <strong>Certificado não encontrado ou inválido.</strong>";
-            }
-        }
-
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
-            if (id) {
-                validar(id);
-                document.getElementById('certId').value = id;
             }
         };
     </script>
